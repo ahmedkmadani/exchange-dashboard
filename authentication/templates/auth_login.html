@@ -1,0 +1,81 @@
+{% extends layout_path %}
+{% load widget_tweaks %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Login {% endblock %}
+
+
+{% block vendor_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'vendor/libs/@form-validation/umd/styles/index.min.css' %}" />
+{% endblock vendor_css %}
+
+{% block vendor_js %}
+{{ block.super }}
+<script src="{% static 'vendor/libs/@form-validation/umd/bundle/popular.min.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js' %}"></script>
+{% endblock vendor_js %}
+
+
+{% block page_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static  'vendor/css/pages/page-auth.css' %}">
+{% endblock page_css %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/pages-auth.js' %}"></script>
+{% endblock page_js %}
+
+
+{% block content %}
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner py-4">
+      <!-- Login -->
+      <div class="card">
+        <div class="card-body">
+            <!-- /Logo -->
+          <h4 class="mb-1 pt-2">Welcome to {% get_theme_variables 'template_name' %}! 👋</h4>
+          <p class="mb-4">Please sign-in to your account to keep track of your cash flow</p>
+
+          <form id="formAuthentication" class="mb-3" action="{% url 'auth-login' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="email" class="form-label">Email or Username</label>
+              <input type="text" class="form-control" id="email" name="email-username" placeholder="Enter your email or username" autofocus>
+            </div>
+            <div class="mb-3 form-password-toggle">
+              <div class="d-flex justify-content-between">
+                <label class="form-label" for="password">Password</label>
+                <a href="{% url 'auth-login' %}">
+                  <small>Forgot Password?</small>
+                </a>
+              </div>
+              <div class="input-group input-group-merge">
+                  {% render_field form.password class="form-control" id="password" type="password" placeholder="••••••••" aria-describedby="password" %}
+                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember-me">
+                <label class="form-check-label" for="remember-me">
+                  Remember Me
+                </label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /Register -->
+    </div>
+  </div>
+</div>
+{% endblock content %}
