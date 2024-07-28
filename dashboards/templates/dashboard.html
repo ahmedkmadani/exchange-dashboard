@@ -1,0 +1,88 @@
+{% extends layout_path %}
+
+{% load i18n %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block vendor_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+{% endblock vendor_css %}
+
+{% block vendor_js %}
+{{ block.super }}
+<script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+{% endblock vendor_js %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/app-ecommerce-dashboard.js' %}"></script>
+    <script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+
+    <script src="{% static 'js/dashboards-crm.js' %}"></script>
+
+{% endblock page_js %}
+
+{% block content %}
+
+<div class="row">
+
+  <!-- Wallet Card -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+          <img src="{% static 'svg/flags/au.svg' %}" alt="User" class="rounded-circle me-3" width="34">
+        <h5 class="card-title mb-1 pt-2">Total Transaction</h5>
+        <small class="text-muted">Last week</small>
+        <p class="mb-2 mt-1">1.28k</p>
+        <div class="pt-1">
+          <span class="badge bg-label-secondary">-12.2%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wallet Card -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+          <img src="{% static 'svg/flags/us.svg' %}" alt="User" class="rounded-circle me-3" width="34">
+        <h5 class="card-title mb-1 pt-2">Total Transaction</h5>
+        <small class="text-muted">Last week</small>
+        <p class="mb-2 mt-1">$4,673</p>
+        <div class="pt-1">
+          <span class="badge bg-label-secondary">+25.2%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Transaction table -->
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="table-responsive card-datatable">
+        <table class="table datatable-invoice border-top">
+          <thead>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th><i class='ti ti-trending-up text-secondary'></i></th>
+              <th>Total</th>
+              <th>Issued Date</th>
+              <th>Invoice Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /Transaction table -->
+</div>
+
+{% endblock %}

@@ -4,40 +4,13 @@
       "name": "Dashboards",
       "icon": "menu-icon tf-icons ti ti-smart-home",
       "slug": "dashboard",
-      "badge": [
-        "primary",
-        "5"
-      ],
-      "submenu": [
-        {
-          "url": "index",
-          "name": "Analytics",
-          "slug": "dashboard-analytics"
-        },
-        {
-          "url": "dashboard-crm",
-          "name": "CRM",
-          "slug": "dashboard-crm"
-        },
-        {
-          "url": "/app/ecommerce/dashboard",
-          "external": true,
-          "name": "eCommerce",
-          "slug": "app-ecommerce-dashboard"
-        },
-        {
-          "url": "/app/logistics/dashboard",
-          "external": true,
-          "name": "Logistics",
-          "slug": "app-logistics-dashboard"
-        },
-        {
-          "url": "/app/academy/dashboard",
-          "external": true,
-          "name": "Academy",
-          "slug": "app-academy-dashboard"
-        }
-      ]
+      "url": "index"
+    },
+       {
+      "name": "Wallets",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "dashboard-wallets",
+      "url": "wallets"
     }
   ]
 }

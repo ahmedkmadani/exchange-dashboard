@@ -1,17 +1,18 @@
 from django.urls import path
 
-from .views import DashboardsView
-
+from .views import DashboardsView, WalletDashboardsView, AddWalletView, WalletTransactionsAPIView
 
 urlpatterns = [
     path(
         "dashboard",
-        DashboardsView.as_view(template_name="dashboard_analytics.html"),
+        DashboardsView.as_view(template_name="dashboard.html"),
         name="index",
     ),
     path(
-        "dashboard/crm/",
-        DashboardsView.as_view(template_name="dashboard_crm.html"),
-        name="dashboard-crm",
+        "dashboard-wallets", WalletDashboardsView.as_view(template_name="dashboard-wallets.html"), name="wallets"
     ),
+    path(
+        "create-wallet", AddWalletView.as_view(template_name="dashboard-wallets.html"), name="create_wallet"
+    ),
+    path("api/v1/wallet-transactions-list", WalletTransactionsAPIView.as_view(), name="wallet-transactions-list")
 ]
