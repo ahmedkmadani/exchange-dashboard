@@ -806,19 +806,30 @@
 
   // Variable declaration for table
   var dt_invoice_table = $('.datatable-invoice');
+
+  var currentURL = window.location.href;
+  var urlObject = new URL(currentURL);
+  let domain = urlObject.origin;
+
   // Invoice datatable
   // --------------------------------------------------------------------
   if (dt_invoice_table.length) {
     var dt_invoice = dt_invoice_table.DataTable({
-      ajax: assetsPath + 'json/invoice-list.json', // JSON file to add data
+      ajax: {
+        type: "GET",
+        url: `${domain}/api/v1/wallet-transactions-list`,
+        dataSrc: 'data'
+      },
       columns: [
         // columns according to JSON
         { data: '' },
-        { data: 'invoice_id' },
-        { data: 'invoice_status' },
-        { data: 'total' },
-        { data: 'issued_date' },
-        { data: 'invoice_status' },
+        { data: 'id' },
+        { data: 'sender_wallet_name' },
+        { data: 'recipient_wallet_name' },
+        { data: 'amount_with_symbol' },
+        { data: 'user_full_name' },
+        { data: 'transaction_type' },
+        { data: 'created_at' },
         { data: 'action' }
       ],
       columnDefs: [
@@ -835,80 +846,88 @@
           // Invoice ID
           targets: 1,
           render: function (data, type, full, meta) {
-            var $invoice_id = full['invoice_id'];
+            var $transaction_id = full['id'];
             // Creates full output for row
-            var $row_output = '<a href="/app/invoice/preview/"><span>#' + $invoice_id + '</span></a>';
+            var $row_output = '#' + $transaction_id + '</span></a>';
             return $row_output;
           }
         },
         {
-          // Invoice status
+          // From Wallet Name
           targets: 2,
           render: function (data, type, full, meta) {
-            var $invoice_status = full['invoice_status'],
-              $due_date = full['due_date'],
-              $balance = full['balance'];
-            var roleBadgeObj = {
-              Sent: '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30"><i class="ti ti-circle-check ti-sm"></i></span>',
-              Draft:
-                '<span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30"><i class="ti ti-device-floppy ti-sm"></i></span>',
-              'Past Due':
-                '<span class="badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30"><i class="ti ti-info-circle ti-sm"></i></span>',
-              'Partial Payment':
-                '<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i class="ti ti-circle-half-2 ti-sm"></i></span>',
-              Paid: '<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30"><i class="ti ti-chart-pie ti-sm"></i></span>',
-              Downloaded:
-                '<span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30"><i class="ti ti-arrow-down-circle ti-sm"></i></span>'
-            };
-            return (
-              "<span data-bs-toggle='tooltip' data-bs-html='true' title='<span>" +
-              $invoice_status +
-              '<br> <span class="fw-medium">Balance:</span> ' +
-              $balance +
-              '<br> <span class="fw-medium">Due Date:</span> ' +
-              $due_date +
-              "</span>'>" +
-              roleBadgeObj[$invoice_status] +
-              '</span>'
-            );
+            var $wallet_name = full['sender_wallet_name'] ? full['sender_wallet_name'] : full['user_full_name'];
+            return $wallet_name;
           }
         },
         {
-          // Total Invoice Amount
+          // From Wallet Name
           targets: 3,
           render: function (data, type, full, meta) {
-            var $total = full['total'];
-            return '$' + $total;
+            var $amount = full['amount_with_symbol'];
+            return $amount;
           }
         },
         {
-          // Actions
-          targets: -1,
-          title: 'Actions',
-          orderable: false,
+          // TO Wallet Name
+          targets: 4,
           render: function (data, type, full, meta) {
-            return (
-              '<div class="d-flex align-items-center">' +
-              '<a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="Send Mail"><i class="ti ti-mail me-2 ti-sm"></i></a>' +
-              '<a href="/app/invoice/preview/" class="text-body" data-bs-toggle="tooltip" title="Preview"><i class="ti ti-eye mx-2 ti-sm"></i></a>' +
-              '<div class="d-inline-block">' +
-              '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm lh-1"></i></a>' +
-              '<div class="dropdown-menu dropdown-menu-end m-0">' +
-              '<a href="javascript:;" class="dropdown-item">Details</a>' +
-              '<a href="javascript:;" class="dropdown-item">Archive</a>' +
-              '<div class="dropdown-divider"></div>' +
-              '<a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>' +
-              '</div>' +
-              '</div>' +
-              '</div>'
-            );
+            var $to_wallet_name = full['recipient_wallet_name'];
+            return $to_wallet_name;
           }
         },
         {
-          // Invoice Status
-          targets: -2,
-          visible: false
-        }
+          // transaction amount
+          targets: 5,
+          render: function (data, type, full, meta) {
+            var $amount = full['recipient_amount_with_symbol'];
+            return $amount;
+          }
+        },
+        {
+          // User
+          targets: 6,
+          render: function (data, type, full, meta) {
+            var $user = full['user_full_name'];
+            return $user;
+          }
+        },
+        {
+          // Invoice status
+          targets: 7,
+          render: function (data, type, full, meta) {
+            var $transaction_type = full['transaction_type'];
+            return $transaction_type;
+          }
+        },
+        {
+          // Create Date
+          targets: 8,
+          render: function (data, type, full, meta) {
+            var $created_at = full['created_at'];
+            return $created_at;
+          }
+        },
+        // {
+        //   // Actions
+        //   targets: 9,
+        //   title: 'Actions',
+        //   orderable: false,
+        //   render: function (data, type, full, meta) {
+        //     return (
+        //       '<div class="d-flex align-items-center">' +
+        //       '<a href="/app/invoice/preview/" class="text-body" data-bs-toggle="tooltip" title="Preview"><i class="ti ti-eye mx-2 ti-sm"></i></a>' +
+        //       '</div>' +
+        //       '</div>' +
+        //       '</div>'
+        //     );
+        //   }
+        // },
+        // {
+        //   // Invoice Status
+        //   targets: -1,
+        //   visible: false
+        // }
       ],
       order: [[1, 'asc']],
       dom:
@@ -929,13 +948,20 @@
       },
       // Buttons
       buttons: [
-           {
-          text: '<i class="ti ti-plus me-md-2"></i><span class="d-md-inline-block d-none">Create Transaction</span>',
+        {
+          text: '<i class="ti ti-plus me-md-2"></i><span class="d-md-inline-block d-none">Create Wallet</span>',
           className: 'btn btn-primary',
           action: function (e, dt, button, config) {
             $('#modalWallet').modal('show');  // Use jQuery to show the modal
           }
         },
+             {
+          text: '<i class="ti ti-plus me-md-2"></i><span class="d-md-inline-block d-none">Create Wallet Transaction</span>',
+          className: 'btn btn-primary',
+          action: function (e, dt, button, config) {
+            $('#modalWalletTransaction').modal('show');  // Use jQuery to show the modal
+          }
+        }
       ],
       // For responsive popup
       responsive: {
@@ -977,7 +1003,7 @@
           .every(function () {
             var column = this;
             var select = $(
-              '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
+              '<select id="UserRole" class="form-select"><option value=""> Select User </option></select>'
             )
               .appendTo('.invoice_status')
               .on('change', function () {

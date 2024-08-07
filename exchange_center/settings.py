@@ -70,6 +70,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "exchange_center.urls"
+LOGIN_URL = 'auth-login'
 
 TEMPLATES = [
     {

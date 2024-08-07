@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import DashboardsView, WalletDashboardsView, AddWalletView, WalletTransactionsAPIView
+from .views import DashboardsView, WalletDashboardsView, AddWalletView, WalletTransactionsAPIView, WalletTransactionView
 
 urlpatterns = [
     path(
@@ -10,6 +10,9 @@ urlpatterns = [
     ),
     path(
         "dashboard-wallets", WalletDashboardsView.as_view(template_name="dashboard-wallets.html"), name="wallets"
+    ),
+    path(
+        "create-wallets-tranaction", WalletTransactionView.as_view(template_name="dashboard-wallets.html"), name="wallets-transactions"
     ),
     path(
         "create-wallet", AddWalletView.as_view(template_name="dashboard-wallets.html"), name="create_wallet"

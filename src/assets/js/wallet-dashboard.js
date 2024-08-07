@@ -824,10 +824,10 @@
         // columns according to JSON
         { data: '' },
         { data: 'id' },
-        { data: 'related_wallet' },
-        { data: 'wallet_name' },
-        { data: 'formatted_amount' },
-        { data: 'user_name' },
+        { data: 'sender_wallet_name' },
+        { data: 'recipient_wallet_name' },
+        { data: 'amount_with_symbol' },
+        { data: 'user_full_name' },
         { data: 'transaction_type' },
         { data: 'created_at' },
         { data: 'action' }
@@ -848,7 +848,7 @@
           render: function (data, type, full, meta) {
             var $transaction_id = full['id'];
             // Creates full output for row
-            var $row_output = '<a href="/app/invoice/preview/"><span>#' + $transaction_id + '</span></a>';
+            var $row_output = '#' + $transaction_id + '</span></a>';
             return $row_output;
           }
         },
@@ -856,7 +856,7 @@
           // From Wallet Name
           targets: 2,
           render: function (data, type, full, meta) {
-            var $wallet_name = full['related_wallet'] ? full['related_wallet'] : full['user_name'];
+            var $wallet_name = full['sender_wallet_name'] ? full['sender_wallet_name'] : full['user_full_name'];
             return $wallet_name;
           }
         },
@@ -864,78 +864,70 @@
           // TO Wallet Name
           targets: 3,
           render: function (data, type, full, meta) {
-            var $to_wallet_name = full['wallet_name'];
-            return $to_wallet_name;
+            var $amount_with_symbol = full['amount_with_symbol'];
+            return $amount_with_symbol;
           }
         },
         {
           // transaction amount
           targets: 4,
           render: function (data, type, full, meta) {
-            var $amount = full['formatted_amount'];
-            return $amount;
+            var $recipient_wallet_name = full['recipient_wallet_name'];
+            return $recipient_wallet_name;
+          }
+        },
+        {
+          // transaction amount
+          targets: 5,
+          render: function (data, type, full, meta) {
+            var $recipient_amount_with_symbol = full['recipient_amount_with_symbol'];
+            return $recipient_amount_with_symbol;
           }
         },
         {
           // User
-          targets: 5,
+          targets: 6,
           render: function (data, type, full, meta) {
-            var $user = full['user_name'];
+            var $user = full['user_full_name'];
             return $user;
           }
         },
         {
           // Invoice status
-          targets: 6,
+          targets: 7,
           render: function (data, type, full, meta) {
-            var $transaction_type = full['transaction_type'],
-              $due_date = full['created_at'],
-              $balance = full['amount'];
-            var roleBadgeObj = {
-              Debit: '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30"><i class="ti ti-circle-check ti-sm"></i></span>',
-              credit: '<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i class="ti ti-chart-pie ti-sm"></i></span>',
-            };
-            return (
-              "<span data-bs-toggle='tooltip' data-bs-html='true' title='<span>" +
-              $transaction_type +
-              '<br> <span class="fw-medium">Balance:</span> ' +
-              $balance +
-              '<br> <span class="fw-medium">Transction Date:</span> ' +
-              $due_date +
-              "</span>'>" +
-              roleBadgeObj[$transaction_type] +
-              '</span>'
-            );
+            var $transaction_type = full['transaction_type'];
+            return $transaction_type;
           }
         },
         {
           // Create Date
-          targets: 7,
+          targets: 8,
           render: function (data, type, full, meta) {
             var $created_at = full['created_at'];
             return $created_at;
           }
         },
-        {
-          // Actions
-          targets: 8,
-          title: 'Actions',
-          orderable: false,
-          render: function (data, type, full, meta) {
-            return (
-              '<div class="d-flex align-items-center">' +
-              '<a href="/app/invoice/preview/" class="text-body" data-bs-toggle="tooltip" title="Preview"><i class="ti ti-eye mx-2 ti-sm"></i></a>' +
-              '</div>' +
-              '</div>' +
-              '</div>'
-            );
-          }
-        },
-        {
-          // Invoice Status
-          targets: -1,
-          visible: false
-        }
+        // {
+        //   // Actions
+        //   targets: 8,
+        //   title: 'Actions',
+        //   orderable: false,
+        //   render: function (data, type, full, meta) {
+        //     return (
+        //       '<div class="d-flex align-items-center">' +
+        //       '<a href="/app/invoice/preview/" class="text-body" data-bs-toggle="tooltip" title="Preview"><i class="ti ti-eye mx-2 ti-sm"></i></a>' +
+        //       '</div>' +
+        //       '</div>' +
+        //       '</div>'
+        //     );
+        //   }
+        // },
+        // {
+        //   // Invoice Status
+        //   targets: -1,
+        //   visible: false
+        // }
       ],
       order: [[1, 'asc']],
       dom:
@@ -963,13 +955,6 @@
             $('#modalWallet').modal('show');  // Use jQuery to show the modal
           }
         },
-             {
-          text: '<i class="ti ti-plus me-md-2"></i><span class="d-md-inline-block d-none">Create Wallet Transaction</span>',
-          className: 'btn btn-primary',
-          action: function (e, dt, button, config) {
-            $('#modalWallet').modal('show');  // Use jQuery to show the modal
-          }
-        }
       ],
       // For responsive popup
       responsive: {

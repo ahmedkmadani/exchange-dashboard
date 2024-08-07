@@ -1,8 +1,9 @@
 """Module for handling user authentication."""
 import logging
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
@@ -12,6 +13,16 @@ from .form.login_form import LoginForm
 from validators.validators import FileValidator
 
 logger = logging.getLogger(__name__)
+
+
+
+def LogoutView(request):
+    # Log the user out
+    logout(request)
+    logger.debug(f"user logged out of the system")
+    # Redirect to a specific URL after logging out (you can change this URL)
+    return redirect(reverse("auth-login"))
+
 
 
 class LoginView(TemplateView):

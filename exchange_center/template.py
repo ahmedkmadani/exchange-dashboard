@@ -15,7 +15,7 @@ TEMPLATE_CONFIG = {
     "style": "light",                 # Options[String]: light(default), dark, system mode
     "rtl_support": True,              # options[Boolean]: True(default), False # To provide RTLSupport or not
     "rtl_mode": False,                # options[Boolean]: False(default), True # To set layout to RTL layout  (myRTLSupport must be True for rtl mode)
-    "has_customizer": True,           # options[Boolean]: True(default), False # Display customizer or not THIS WILL REMOVE INCLUDED JS FILE. SO LOCAL STORAGE WON'T WORK
+    "has_customizer": False,           # options[Boolean]: True(default), False # Display customizer or not THIS WILL REMOVE INCLUDED JS FILE. SO LOCAL STORAGE WON'T WORK
     "display_customizer": True,       # options[Boolean]: True(default), False # Display customizer UI or not, THIS WON'T REMOVE INCLUDED JS FILE. SO LOCAL STORAGE WILL WORK
     "content_layout": "compact",      # options[String]: 'compact', 'wide' (compact=container-xxl, wide=container-fluid)
     "navbar_type": "fixed",           # options[String]: 'fixed', 'static', 'hidden' (Only for vertical Layout)
@@ -40,8 +40,8 @@ TEMPLATE_CONFIG = {
 # ? Personalize template by changing theme variables (For ex: Name, URL Version etc...)
 THEME_VARIABLES = {
     "creator_name": "Ahmed Madani",
-    "template_name": "Exchange Center",
-    "template_suffix": "Exchange Center",
+    "template_name": "Dashboard",
+    "template_suffix": "Dashboard",
     "template_version": "1.0.0",
     "template_free": False,
     "template_description": "This is application allow user to keep track of the exchange rate of different currencies.",

@@ -34,11 +34,11 @@
   <div class="col-xl-2 col-md-4 col-6 mb-4">
     <div class="card">
       <div class="card-body">
-          <img src="{% static 'svg/flags/au.svg' %}" alt="User" class="rounded-circle me-3" width="34">
-        <h5 class="card-title mb-1 pt-2">{{ wallet.name }}</h5>
-        <p class="mb-2 mt-1">{{ wallet.initial_amount }}{{ wallet.currency.symbol }}</p>
+<img class="rounded-circle" width="40" height="40"
+     src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.6/flags/4x3/{{ wallet.currency.flag_code }}.svg"        <h5 class="card-title mb-1 pt-2">{{ wallet.name }}</h5>
+        <p class="mb-2 mt-1">{{ wallet.balance }}{{ wallet.currency.symbol }}</p>
         <div class="pt-1">
-          <span class="badge bg-label-secondary">-12.2%</span>
+          <span class="badge bg-label-secondary">-00.0%</span>
         </div>
       </div>
     </div>
@@ -56,12 +56,13 @@
               <th></th>
                 <th>ID</th>
                 <th>FROM</th>
+                <th>Amount</th>
                 <th>TO</th>
                 <th>Amount</th>
                 <th>User</th>
                 <th>Transaction Type</th>
                 <th>Created Date</th>
-              <th>Actions</th>
+{#              <th>Actions</th>#}
             </tr>
           </thead>
         </table>
@@ -70,7 +71,7 @@
   </div>
   <!-- /Transaction table -->
 
-  <!-- Wallet modal -->
+  <!-- Create Wallet modal -->
 
 <div class="modal fade" id="modalWallet" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -99,8 +100,56 @@
               {% render_field form.currency class="form-control" id="walletCurrency" placeholder="Enter Currency" %}
             </div>
             <div class="col mb-0">
-              <label for="walletInitialAmount" class="form-label">Initial Amount</label>
-              {% render_field form.initial_amount class="form-control" id="walletInitialAmount" placeholder="Enter Initial Amount" %}
+              <label for="walletInitialAmount" class="form-label">Balance</label>
+              {% render_field form.balance class="form-control" id="walletInitialAmount" placeholder="Enter Balance" %}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+    <!-- Wallet Transaction modal -->
+<div class="modal fade" id="modalWalletTransaction" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCenterTitle">Create Wallet Transaction</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="{% url 'wallets-transactions' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              Please correct the errors below.
+            </div>
+          {% endif %}
+          <div class="row">
+            <div class="col mb-3">
+              <label for="walletName" class="form-label">From Wallet</label>
+              {% render_field wallet_transactions_form.from_wallet class="form-control" id="walletName" placeholder="Enter Wallet Name" %}
+            </div>
+          </div>
+             <div class="row">
+            <div class="col mb-3">
+              <label for="walletName" class="form-label">To Wallet</label>
+              {% render_field wallet_transactions_form.to_wallet class="form-control" id="walletName" placeholder="Enter Wallet Name" %}
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col mb-0">
+              <label for="walletCurrency" class="form-label">Transaction Rate</label>
+              {% render_field wallet_transactions_form.rate class="form-control" id="walletCurrency" placeholder="Enter Transaction rate" %}
+            </div>
+            <div class="col mb-0">
+              <label for="walletInitialAmount" class="form-label">Amount</label>
+              {% render_field wallet_transactions_form.amount class="form-control" id="walletInitialAmount" placeholder="Enter Amount" %}
             </div>
           </div>
         </div>
