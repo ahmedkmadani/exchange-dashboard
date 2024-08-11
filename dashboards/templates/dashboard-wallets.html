@@ -61,6 +61,7 @@
                 <th>Amount</th>
                 <th>User</th>
                 <th>Transaction Type</th>
+                <th>Rate</th>
                 <th>Created Date</th>
 {#              <th>Actions</th>#}
             </tr>
@@ -113,55 +114,6 @@
     </div>
   </div>
 </div>
-
-    <!-- Wallet Transaction modal -->
-<div class="modal fade" id="modalWalletTransaction" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalCenterTitle">Create Wallet Transaction</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form method="post" action="{% url 'wallets-transactions' %}">
-        {% csrf_token %}
-        <div class="modal-body">
-          {% if form.errors %}
-            <div class="alert alert-danger">
-              Please correct the errors below.
-            </div>
-          {% endif %}
-          <div class="row">
-            <div class="col mb-3">
-              <label for="walletName" class="form-label">From Wallet</label>
-              {% render_field wallet_transactions_form.from_wallet class="form-control" id="walletName" placeholder="Enter Wallet Name" %}
-            </div>
-          </div>
-             <div class="row">
-            <div class="col mb-3">
-              <label for="walletName" class="form-label">To Wallet</label>
-              {% render_field wallet_transactions_form.to_wallet class="form-control" id="walletName" placeholder="Enter Wallet Name" %}
-            </div>
-          </div>
-          <div class="row g-2">
-            <div class="col mb-0">
-              <label for="walletCurrency" class="form-label">Transaction Rate</label>
-              {% render_field wallet_transactions_form.rate class="form-control" id="walletCurrency" placeholder="Enter Transaction rate" %}
-            </div>
-            <div class="col mb-0">
-              <label for="walletInitialAmount" class="form-label">Amount</label>
-              {% render_field wallet_transactions_form.amount class="form-control" id="walletInitialAmount" placeholder="Enter Amount" %}
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 
 {% endblock %}
 </div>

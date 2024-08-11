@@ -22,15 +22,15 @@ class WalletTransactionForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     amount = forms.DecimalField(
-        max_digits=10,
-        decimal_places=2,
+        max_digits=22,
+        decimal_places=12,
         required=True,
         label="Amount",
         widget=forms.NumberInput(attrs={'class': 'form-control'})
     )
     rate = forms.DecimalField(
-        max_digits=10,
-        decimal_places=2,
+        max_digits=22,
+        decimal_places=12,
         required=True,
         label="Rate",
         widget=forms.NumberInput(attrs={'class': 'form-control'})

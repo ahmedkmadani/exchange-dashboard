@@ -828,6 +828,7 @@
         { data: 'recipient_wallet_name' },
         { data: 'amount_with_symbol' },
         { data: 'user_full_name' },
+        { data: 'exchange_rate_rounded' },
         { data: 'transaction_type' },
         { data: 'created_at' },
         { data: 'action' }
@@ -884,7 +885,7 @@
             return $amount;
           }
         },
-        {
+             {
           // User
           targets: 6,
           render: function (data, type, full, meta) {
@@ -900,9 +901,17 @@
             return $transaction_type;
           }
         },
+            {
+          // User
+          targets: 8,
+          render: function (data, type, full, meta) {
+            var $user = full['exchange_rate_rounded'];
+            return $user;
+          }
+        },
         {
           // Create Date
-          targets: 8,
+          targets: 9,
           render: function (data, type, full, meta) {
             var $created_at = full['created_at'];
             return $created_at;

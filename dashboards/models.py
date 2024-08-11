@@ -37,9 +37,9 @@ class Transaction(models.Model):
     sender_wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, related_name='sent_transactions', null=True,
                                       blank=True)
     recipient_wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, related_name='received_transactions')
-    amount = models.DecimalField(max_digits=19, decimal_places=4)
+    amount = models.DecimalField(max_digits=22, decimal_places=12)
     created_at = models.DateTimeField(auto_now_add=True)
-    exchange_rate = models.DecimalField(max_digits=19, decimal_places=4, null=True, blank=True)
+    exchange_rate = models.DecimalField(max_digits=19, decimal_places=10, null=True, blank=True)
 
     def __str__(self):
         return (f"{self.get_transaction_type_display()} of {self.amount} from {self.sender_wallet} to "

@@ -7,6 +7,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     recipient_wallet_name = serializers.SerializerMethodField()
     amount_with_symbol = serializers.SerializerMethodField()
     user_full_name = serializers.SerializerMethodField()
+    exchange_rate_rounded = serializers.SerializerMethodField()
     recipient_amount_with_symbol = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M")
 
@@ -33,3 +34,8 @@ class TransactionSerializer(serializers.ModelSerializer):
             recipient_amount = obj.amount * obj.exchange_rate
             return f"{recipient_currency_symbol}{recipient_amount:.2f}"
         return None
+
+    def get_exchange_rate_rounded(self, obj):
+        exchange_rate = obj.exchange_rate  # assuming the exchange rate is a field in the Transaction model
+        rounded_rate = round(exchange_rate, 5)
+        return rounded_rate

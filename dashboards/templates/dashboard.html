@@ -63,6 +63,7 @@
                 <th>Amount</th>
                 <th>User</th>
                 <th>Transaction Type</th>
+                <th>Rate</th>
                 <th>Created Date</th>
             </tr>
           </thead>
@@ -123,7 +124,7 @@
         <h5 class="modal-title" id="modalCenterTitle">Create Wallet Transaction</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" action="{% url 'wallets-transactions' %}">
+      <form method="post" action="{% url 'index' %}">
         {% csrf_token %}
         <div class="modal-body">
           {% if form.errors %}
