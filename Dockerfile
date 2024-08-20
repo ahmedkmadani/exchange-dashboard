@@ -5,7 +5,7 @@ FROM python:3.8
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE exchange_center.settings
-EXPOSE 8001
+EXPOSE 8000
 
 # Install system dependencies
 RUN apt-get update && \
