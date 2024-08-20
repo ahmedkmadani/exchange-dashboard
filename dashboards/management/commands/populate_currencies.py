@@ -9,7 +9,10 @@ class Command(BaseCommand):
         currencies = [
             {'code': 'USD', 'name': 'US Dollar', 'symbol': '$', 'flag_code': 'us'},
             {'code': 'SAR', 'name': 'Saudi Riyal', 'symbol': '﷼', 'flag_code': 'sa'},
-            {'code': 'SDG', 'name': 'Sudanese Pound', 'symbol': 'جنيه', 'flag_code': 'sd'}
+            {'code': 'SDG', 'name': 'Sudanese Pound', 'symbol': 'جنيه', 'flag_code': 'sd'},
+            {'code': 'EGP', 'name': 'Egyptian Pound', 'symbol': 'ج.م', 'flag_code': 'eg'},
+            {'code': 'AED', 'name': 'UAE Dirham', 'symbol': 'د.إ', 'flag_code': 'ae'},
+            {'code': 'EUR', 'name': 'Euro', 'symbol': '€', 'flag_code': 'eu'}
         ]
 
         for currency in currencies:

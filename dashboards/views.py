@@ -25,6 +25,8 @@ class DashboardsView(LoginRequiredMixin, TemplateView):
         # A function to init the global layout. It is defined in web_project/__init__.py file
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
         wallet_transactions_form = WalletTransactionForm()
+        form = WalletForm()
+        context['form'] = form
         context["wallet_transactions_form"] = wallet_transactions_form
 
         return context
