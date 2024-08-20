@@ -929,13 +929,13 @@
       },
       // Buttons
       buttons: [
-           {
-          text: '<i class="ti ti-plus me-md-2"></i><span class="d-md-inline-block d-none">Create Transaction</span>',
+        {
+          text: '<i class="ti ti-plus me-md-2"></i><span class="d-md-inline-block d-none">Create Invoice</span>',
           className: 'btn btn-primary',
           action: function (e, dt, button, config) {
-            $('#modalWallet').modal('show');  // Use jQuery to show the modal
+            window.location = '/app/invoice/add/';
           }
-        },
+        }
       ],
       // For responsive popup
       responsive: {
